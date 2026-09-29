@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Our RC Car</title>
+<style>
+:root{
+  color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg1:#06020c;--bg2:#1b0733;--text:#f6eefc;--muted:#c2adda;
+  --glass:rgba(255,255,255,.07);--edge:rgba(255,255,255,.26);--shadow:rgba(0,0,0,.55);
+  --p:#7a2cf0;--r:#e11d48;--m:#b5179e;--accent:#ff6b93;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(84px + env(safe-area-inset-top,0px))}
+body{margin:0;background:var(--bg1);color:var(--text);font-family:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;line-height:1.6;min-height:100%}
+.bg{position:fixed;inset:0;z-index:0;background:radial-gradient(circle at 20% 10%,var(--bg2),var(--bg1) 70%);overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;animation:drift 20s ease-in-out infinite alternate}
+.blob.a{width:46vmax;height:46vmax;background:var(--p);top:-14vmax;left:-10vmax}
+.blob.b{width:40vmax;height:40vmax;background:var(--r);bottom:-14vmax;right:-8vmax;animation-duration:26s}
+.blob.c{width:26vmax;height:26vmax;background:var(--m);top:40%;left:48%;animation-duration:32s;opacity:.35}
+@keyframes drift{to{transform:translate(7vmax,5vmax) scale(1.18)}}
+.glass{background:var(--glass);border:1px solid var(--edge);border-radius:26px;
+  -webkit-backdrop-filter:blur(24px) saturate(180%);backdrop-filter:blur(24px) saturate(180%);
+  box-shadow:0 20px 60px var(--shadow),inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(255,255,255,.08)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;margin:12px auto 0;width:calc(100% - 24px);max-width:1040px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;border-radius:99px}
+.logo{font-weight:750;letter-spacing:.02em;white-space:nowrap}
+.logo b{color:var(--accent)}
+nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav a{color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:99px;font-size:.9rem;white-space:nowrap;transition:background .25s,color .25s}
+nav a:hover{color:#fff;background:rgba(225,29,72,.35)}
+main{position:relative;z-index:1}
+section{max-width:1040px;margin:0 auto;padding:clamp(56px,10vw,110px) 20px 0}
+.hero{min-height:82vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding-top:40px}
+.tag{display:inline-block;padding:6px 16px;border-radius:99px;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:22px}
+h1{font-size:clamp(2.6rem,9vw,6rem);line-height:1;margin:0 0 18px;font-weight:800;letter-spacing:-.03em;
+  background:linear-gradient(100deg,#fff,#d9b8ff 40%,#ff6b93 70%,#fff);-webkit-background-clip:text;background-clip:text;color:transparent}
+@keyframes shine{to{background-position:-250% 0}}
+h2{font-size:clamp(1.7rem,4.5vw,2.6rem);margin:0 0 8px;font-weight:700;letter-spacing:-.01em}
+.eyebrow{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;font-weight:600}
+.lead{color:var(--muted);font-size:clamp(1rem,2.2vw,1.25rem);max-width:640px;margin:0 auto 28px}
+.sec-lead{color:var(--muted);margin:0 0 28px;max-width:620px}
+.btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn{padding:13px 26px;border-radius:99px;text-decoration:none;color:#fff;font-weight:600;transition:transform .25s,box-shadow .25s}
+.btn.pri{background:linear-gradient(100deg,var(--p),var(--r));box-shadow:0 10px 30px rgba(225,29,72,.4)}
+.btn.sec{border:1px solid var(--edge);background:var(--glass)}
+.btn:hover{transform:translateY(-3px)}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{padding:24px;transition:transform .35s,border-color .35s,box-shadow .35s}
+.card:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 24px 60px rgba(225,29,72,.28),inset 0 1px 0 rgba(255,255,255,.4)}
+.card h3{margin:0 0 6px;font-size:1.15rem}
+.card p{margin:0;color:var(--muted);font-size:.96rem}
+.ico{font-size:1.7rem;margin-bottom:10px}
+.flow{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));counter-reset:s}
+.flow .card{text-align:center;counter-increment:s}
+.flow .card::before{content:counter(s);display:grid;place-items:center;width:46px;height:46px;margin:0 auto 12px;border-radius:50%;
+  border:1px solid var(--edge);color:var(--accent);font-weight:700;animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 26px rgba(225,29,72,.55)}}
+.num{font-size:clamp(2rem,5vw,2.9rem);font-weight:750;color:var(--accent);line-height:1.1}
+footer{position:relative;z-index:1;text-align:center;color:var(--muted);padding:80px 20px calc(40px + env(safe-area-inset-bottom,0px));font-size:.9rem}
+.reveal{opacity:0;transform:translateY(34px);filter:blur(8px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.2,1),filter .9s ease;transition-delay:var(--d,0s)}
+.reveal.in{opacity:1;transform:none;filter:none}
+@media (prefers-reduced-motion:reduce){.blob,.flow .card::before{animation:none}.reveal{opacity:1;transform:none;filter:none;transition:none}html{scroll-behavior:auto}}
+
+/* Controller section (scoped) */
+#controller .c-layout{display:grid;gap:16px;grid-template-columns:1fr}
+@media(min-width:860px){#controller .c-layout{grid-template-columns:7fr 5fr}}
+#controller .c-col{display:flex;flex-direction:column;gap:16px}
+#controller .c-card{padding:22px}
+#controller .c-h{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+#controller .c-h h3{margin:0;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700}
+#controller .c-pill{font-size:.75rem;padding:4px 12px;border-radius:99px;border:1px solid var(--edge);background:rgba(0,0,0,.3);color:var(--text);font-variant-numeric:tabular-nums}
+#controller .c-pill.bt{color:var(--accent)}
+#controller .c-conn{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+#controller .c-status{display:flex;align-items:center;gap:8px;font-size:.75rem;font-weight:600;letter-spacing:.08em;color:var(--muted)}
+#controller .c-led{width:10px;height:10px;border-radius:50%;background:var(--r);box-shadow:0 0 12px var(--r);transition:all .3s}
+#controller .c-led.on{background:#4ade80;box-shadow:0 0 12px #4ade80}
+#controller input[type=text]{width:140px;padding:8px 12px;border-radius:99px;border:1px solid var(--edge);background:rgba(0,0,0,.35);color:var(--text);font:inherit;font-size:.82rem;outline:none}
+#controller input[type=text]:focus{border-color:var(--accent)}
+#controller input[type=text]:disabled{opacity:.6}
+#controller .c-btn{padding:9px 18px;border-radius:99px;border:1px solid var(--edge);background:var(--glass);color:var(--text);font:inherit;font-size:.82rem;font-weight:600;cursor:pointer;transition:transform .2s,background .2s}
+#controller .c-btn:hover{background:rgba(225,29,72,.3)}
+#controller .c-btn:active{transform:scale(.96)}
+#controller .c-btn.pri,#controller .c-btn.on{background:linear-gradient(100deg,var(--p),var(--r));border-color:transparent}
+#controller .c-row{display:flex;align-items:center;gap:14px;font-size:.78rem;color:var(--muted)}
+#controller input[type=range]{flex:1;height:6px;border-radius:99px;appearance:none;-webkit-appearance:none;background:rgba(255,255,255,.18);outline:none}
+#controller input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--r));border:2px solid #fff;cursor:pointer}
+#controller input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--r);border:2px solid #fff;cursor:pointer}
+#controller .c-pad{display:flex;flex-direction:column;align-items:center}
+#controller .c-pad .c-h{width:100%}
+#joystickZone{width:224px;height:224px;border-radius:50%;position:relative;touch-action:none;-webkit-user-select:none;user-select:none;background:rgba(0,0,0,.35);border:1px solid var(--edge);box-shadow:inset 0 0 40px rgba(122,44,240,.25),0 0 40px rgba(225,29,72,.18)}
+#joystickZone .hz{position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(255,255,255,.14)}
+#joystickZone .vt{position:absolute;top:0;bottom:0;left:50%;width:1px;background:rgba(255,255,255,.14)}
+#joystickZone .lb{position:absolute;font-size:.62rem;letter-spacing:.14em;color:var(--muted)}
+#joystickZone .lb.t{top:8px;left:50%;transform:translateX(-50%)}#joystickZone .lb.b{bottom:8px;left:50%;transform:translateX(-50%)}
+#joystickZone .lb.l{left:10px;top:50%;transform:translateY(-50%)}#joystickZone .lb.r{right:10px;top:50%;transform:translateY(-50%)}
+#joystickHandle{position:absolute;top:50%;left:50%;width:80px;height:80px;margin:-40px 0 0 -40px;border-radius:50%;cursor:grab;background:linear-gradient(135deg,var(--p),var(--r));border:2px solid rgba(255,255,255,.7);box-shadow:0 10px 30px rgba(225,29,72,.45);transition:transform .075s}
+#controller .c-hint{margin:16px 0 0;font-size:.78rem;color:var(--muted);text-align:center}
+#controller .c-keys{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:4px 0 16px;-webkit-user-select:none;user-select:none}
+#controller .c-key{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:16px 0;border-radius:18px;border:1px solid var(--edge);background:var(--glass);color:var(--text);font:inherit;font-size:.68rem;font-weight:700;letter-spacing:.14em;cursor:pointer;touch-action:manipulation;transition:transform .15s,background .2s,box-shadow .2s}
+#controller .c-key:hover{background:rgba(225,29,72,.25);box-shadow:0 10px 30px rgba(225,29,72,.25)}
+#controller .c-key:active{transform:scale(.94)}
+#controller .c-key.stop{border-color:rgba(225,29,72,.7);color:#ff8fa8;background:rgba(225,29,72,.18)}
+#controller .c-key svg{width:22px;height:22px}
+#controller .c-aux{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-top:16px;border-top:1px solid var(--edge)}
+#controller .c-aux .c-btn{padding:12px 0;border-radius:16px;letter-spacing:.1em;text-transform:uppercase;font-size:.72rem}
+#controller .c-txt{margin:0 0 14px;font-size:.85rem;color:var(--muted)}
+#controller .c-txt b{color:var(--accent)}
+#logConsole{height:120px;overflow-y:auto;padding:12px;border-radius:16px;border:1px solid var(--edge);background:rgba(0,0,0,.4);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.72rem;display:flex;flex-direction:column;gap:4px}
+#logConsole div{display:flex;gap:8px}
+#logConsole .lt{color:rgba(255,255,255,.4)}#logConsole .sys{color:var(--muted)}#logConsole .ok{color:#4ade80}#logConsole .err{color:#ff7a8e}#logConsole .sent{color:#d9b8ff}
+#controller .c-link{background:none;border:none;color:var(--muted);font:inherit;font-size:.75rem;text-decoration:underline;cursor:pointer}
+#controller .c-link:hover{color:var(--accent)}
+#controller .c-note{margin-top:14px;font-size:.8rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="bg"><div class="blob a"></div><div class="blob b"></div><div class="blob c"></div></div>
+
+<header class="glass">
+  <div class="logo">RC<b>Car</b></div>
+  <nav>
+    <a href="#about">Overview</a><a href="#how">System</a><a href="#parts">Components</a><a href="#drive">Drive control</a><a href="#controller">Controller</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" id="top">
+    <span class="tag glass reveal">Engineering Project</span>
+    <h1 class="reveal" style="--d:.1s">The RC Racer</h1>
+    <p class="lead reveal" style="--d:.2s">A four-wheel remote-controlled vehicle built on Arduino. Designed, wired and programmed by our team.</p>
+    <div class="btns reveal" style="--d:.3s"><a class="btn pri" href="#parts">View components</a><a class="btn sec" href="#how">System overview</a></div>
+  </section>
+
+  <section id="about">
+    <div class="eyebrow reveal">01 / Overview</div><h2 class="reveal">Project overview</h2>
+    <p class="sec-lead reveal">An end-to-end build covering the electronics, wiring and control firmware, developed in-house.</p>
+    <div class="grid">
+      <div class="card glass reveal"><h3>Objective</h3><p>Design and build a responsive four-wheel RC car.</p></div>
+      <div class="card glass reveal" style="--d:.1s"><h3>Implementation</h3><p>Arduino boards for control, L293 drivers for power switching, four motors for drive.</p></div>
+      <div class="card glass reveal" style="--d:.2s"><h3>Outcome</h3><p>A working RC car, tested and operated by our team.</p></div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="eyebrow reveal">02 / System</div><h2 class="reveal">System overview</h2>
+    <p class="sec-lead reveal">The signal path from operator input to wheel motion.</p>
+    <div class="flow">
+      <div class="card glass reveal"><h3>Command</h3><p>The operator sends a driving command.</p></div>
+      <div class="card glass reveal" style="--d:.1s"><h3>Arduino</h3><p>Firmware determines each motor's action.</p></div>
+      <div class="card glass reveal" style="--d:.2s"><h3>L293 Drivers</h3><p>Logic signals are switched into motor current.</p></div>
+      <div class="card glass reveal" style="--d:.3s"><h3>BO Motors</h3><p>Four wheels move the car.</p></div>
+    </div>
+  </section>
+
+  <section id="parts">
+    <div class="eyebrow reveal">03 / Components</div><h2 class="reveal">Components</h2>
+    <p class="sec-lead reveal">The core hardware used in the build.</p>
+    <div class="grid">
+      <div class="card glass reveal"><h3>Arduino Uno R3</h3><p>5V microcontroller board based on the ATmega328P.</p></div>
+      <div class="card glass reveal" style="--d:.1s"><h3>Arduino Uno R4 WiFi</h3><p>Newer board with integrated Wi-Fi and Bluetooth.</p></div>
+      <div class="card glass reveal" style="--d:.2s"><h3>4 × BO Motors</h3><p>Geared DC motors, one on each wheel.</p></div>
+      <div class="card glass reveal" style="--d:.3s"><h3>2 × L293</h3><p>Dual H-bridge drivers, each controlling two motors.</p></div>
+    </div>
+  </section>
+
+  <section id="drive">
+    <div class="eyebrow reveal">04 / Drive control</div><h2 class="reveal">Drive control</h2>
+    <p class="sec-lead reveal">How the L293 H-bridge drivers control direction.</p>
+    <div class="grid">
+      <div class="card glass reveal"><h3>Forward</h3><p>All motors spin forward.</p></div>
+      <div class="card glass reveal" style="--d:.1s"><h3>Reverse</h3><p>All motors spin backward.</p></div>
+      <div class="card glass reveal" style="--d:.2s"><h3>Turn left</h3><p>Left side slows or reverses, right side drives.</p></div>
+      <div class="card glass reveal" style="--d:.3s"><h3>Turn right</h3><p>Right side slows or reverses, left side drives.</p></div>
+    </div>
+  </section>
+
+  <section id="controller">
+    <div class="eyebrow reveal">05 / Controller</div>
+    <h2 class="reveal">Remote controller</h2>
+    <p class="sec-lead reveal">The control interface used to drive the car from a phone or laptop. Commands are sent to the Arduino Uno R4 WiFi over Wi-Fi.</p>
+    <div class="c-layout">
+      <div class="c-col">
+        <div class="glass c-card reveal">
+          <div class="c-h"><h3>Connection</h3>
+            <div class="c-conn">
+              <div class="c-status"><span id="statusLed" class="c-led"></span><span id="statusText">DISCONNECTED</span></div>
+              <input type="text" id="ipInput" value="192.168.4.1" placeholder="Arduino IP" aria-label="Arduino IP address">
+              <button id="connectBtn" class="c-btn pri" onclick="toggleConnection()"><span id="connectBtnText">Connect</span></button>
+            </div>
+          </div>
+          <div class="c-h"><h3>Throttle</h3><span id="speedValue" class="c-pill">85%</span></div>
+          <div class="c-row"><span>20%</span><input type="range" id="speedSlider" min="20" max="100" value="85" oninput="updateSpeed(this.value)" aria-label="Speed"><span>100%</span></div>
+        </div>
+        <div class="glass c-card c-pad reveal">
+          <div class="c-h"><h3>Joystick</h3><span class="c-pill">Mode: <span id="joystickStateText">IDLE</span></span></div>
+          <div id="joystickZone">
+            <div class="hz"></div><div class="vt"></div>
+            <span class="lb t">FWD</span><span class="lb b">REV</span><span class="lb l">LEFT</span><span class="lb r">RIGHT</span>
+            <div id="joystickHandle"></div>
+          </div>
+          <p class="c-hint">Drag the handle inside the pad for directional control.</p>
+        </div>
+      </div>
+      <div class="c-col">
+        <div class="glass c-card reveal">
+          <div class="c-h"><h3>Direction pad</h3><span class="c-pill">Touch or click</span></div>
+          <div class="c-keys">
+            <div></div>
+            <button class="c-key" ontouchstart="sendCmd('FORWARD')" onmousedown="sendCmd('FORWARD')" onmouseup="sendCmd('STOP')" ontouchend="sendCmd('STOP')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>FWD</button>
+            <div></div>
+            <button class="c-key" ontouchstart="sendCmd('LEFT')" onmousedown="sendCmd('LEFT')" onmouseup="sendCmd('STOP')" ontouchend="sendCmd('STOP')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>LEFT</button>
+            <button class="c-key stop" onclick="sendCmd('STOP')"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>STOP</button>
+            <button class="c-key" ontouchstart="sendCmd('RIGHT')" onmousedown="sendCmd('RIGHT')" onmouseup="sendCmd('STOP')" ontouchend="sendCmd('STOP')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>RIGHT</button>
+            <div></div>
+            <button class="c-key" ontouchstart="sendCmd('BACKWARD')" onmousedown="sendCmd('BACKWARD')" onmouseup="sendCmd('STOP')" ontouchend="sendCmd('STOP')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>REV</button>
+            <div></div>
+          </div>
+          <div class="c-aux">
+            <button class="c-btn" id="hornBtn" onclick="toggleHorn()">Horn</button>
+            <button class="c-btn" id="lightsBtn" onclick="toggleLights()">Lights: Off</button>
+          </div>
+        </div>
+        <div class="glass c-card reveal">
+          <div class="c-h"><h3>Bluetooth &amp; keyboard</h3><span id="kbStatusBadge" class="c-pill">Active: WASD / Arrows</span></div>
+          <p class="c-txt">While this section is on screen, use <b>W, A, S, D</b> or the <b>arrow keys</b> to drive. Space sounds the horn.</p>
+          <button class="c-btn" style="width:100%" onclick="connectBluetoothKeyboard()">Pair Bluetooth keyboard</button>
+        </div>
+      </div>
+    </div>
+    <div class="glass c-card reveal" style="margin-top:16px">
+      <div class="c-h"><h3>Telemetry log</h3><button class="c-link" onclick="clearLogs()">Clear</button></div>
+      <div id="logConsole"><div class="sys">[System] Controller initialized. Ready to connect to the Arduino Uno R4 WiFi.</div></div>
+    </div>
+    <p class="c-note">Live driving requires the controller to be opened on the same Wi-Fi network as the car.</p>
+  </section>
+</main>
+
+<footer>RC Car Project · Engineering documentation</footer>
+
+<script>
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return;}
+  var io=new IntersectionObserver(function(list){list.forEach(function(x){
+    if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:.15});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+
+<script>
+  var isConnected=false, arduinoIP="192.168.4.1", speed=85, lightsOn=false, hornActive=false, currentCommand="STOP", ctlInView=false;
+  var ipInput=document.getElementById('ipInput'), statusLed=document.getElementById('statusLed'), statusText=document.getElementById('statusText'),
+      connectBtnText=document.getElementById('connectBtnText'), speedValue=document.getElementById('speedValue'), logConsole=document.getElementById('logConsole'),
+      lightsBtn=document.getElementById('lightsBtn'), joystickZone=document.getElementById('joystickZone'), joystickHandle=document.getElementById('joystickHandle'),
+      joystickStateText=document.getElementById('joystickStateText');
+
+  function logMessage(msg,type){
+    var div=document.createElement('div');
+    div.className=type==='success'?'ok':type==='error'?'err':type==='sent'?'sent':'sys';
+    var t=document.createElement('span');t.className='lt';t.textContent='['+new Date().toLocaleTimeString()+']';
+    var m=document.createElement('span');m.textContent=msg;
+    div.appendChild(t);div.appendChild(m);logConsole.appendChild(div);logConsole.scrollTop=logConsole.scrollHeight;
+  }
+  function clearLogs(){logConsole.innerHTML='<div class="sys">[System] Console cleared.</div>';}
+
+  function toggleConnection(){
+    arduinoIP=ipInput.value.trim();
+    if(!arduinoIP){logMessage("Please enter a valid Arduino IP address.","error");return;}
+    if(!isConnected){
+      logMessage("Attempting connection to Arduino R4 at http://"+arduinoIP+"...","info");
+      setTimeout(function(){
+        isConnected=true;statusLed.className="c-led on";statusText.textContent="CONNECTED";
+        connectBtnText.textContent="Disconnect";ipInput.disabled=true;
+        logMessage("Successfully connected to the car at "+arduinoIP,"success");
+      },600);
+    }else{
+      isConnected=false;statusLed.className="c-led";statusText.textContent="DISCONNECTED";
+      connectBtnText.textContent="Connect";ipInput.disabled=false;
+      logMessage("Disconnected from the car.","info");
+    }
+  }
+  function updateSpeed(val){speed=val;speedValue.textContent=val+'%';if(isConnected)sendHttpCommand("SPEED="+speed);}
+  function sendCmd(cmd){
+    if(currentCommand===cmd&&cmd!=='STOP')return;
+    currentCommand=cmd;
+    logMessage("Command: "+cmd+" (Speed: "+speed+"%)","sent");
+    if(isConnected)sendHttpCommand("cmd="+cmd+"&speed="+speed);
+  }
+  function sendHttpCommand(query){
+    fetch("http://"+arduinoIP+"/action?"+query,{mode:'no-cors'}).then(function(){}).catch(function(err){
+      logMessage("Network error communicating with Arduino: "+err.message,"error");});
+  }
+  function toggleLights(){
+    lightsOn=!lightsOn;lightsBtn.textContent="Lights: "+(lightsOn?"On":"Off");lightsBtn.classList.toggle('on',lightsOn);
+    logMessage("Auxiliary lights: "+(lightsOn?"ON":"OFF"),"sent");
+    if(isConnected)sendHttpCommand("cmd=LIGHTS_"+(lightsOn?"ON":"OFF"));
+  }
+  function toggleHorn(){
+    hornActive=!hornActive;logMessage("Horn activated","sent");
+    if(isConnected)sendHttpCommand("cmd=HORN");
+    setTimeout(function(){hornActive=false;},300);
+  }
+
+  var joystickCenter={x:0,y:0}, maxRadius=75, isDragging=false;
+  function initJoystick(){var r=joystickZone.getBoundingClientRect();joystickCenter={x:r.width/2,y:r.height/2};}
+  window.addEventListener('resize',initJoystick);window.addEventListener('load',initJoystick);
+  function handleJoystickMove(cx,cy){
+    var r=joystickZone.getBoundingClientRect(),x=cx-r.left-joystickCenter.x,y=cy-r.top-joystickCenter.y;
+    var d=Math.sqrt(x*x+y*y),a=Math.atan2(y,x),px=x,py=y;
+    if(d>maxRadius){px=Math.cos(a)*maxRadius;py=Math.sin(a)*maxRadius;}
+    joystickHandle.style.transform="translate("+px+"px, "+py+"px)";
+    if(d<25){joystickStateText.textContent="STOP";sendCmd("STOP");}
+    else{
+      var deg=a*(180/Math.PI);if(deg<0)deg+=360;
+      if(deg>=315||deg<45){joystickStateText.textContent="RIGHT";sendCmd("RIGHT");}
+      else if(deg>=45&&deg<135){joystickStateText.textContent="BACKWARD";sendCmd("BACKWARD");}
+      else if(deg>=135&&deg<225){joystickStateText.textContent="LEFT";sendCmd("LEFT");}
+      else{joystickStateText.textContent="FORWARD";sendCmd("FORWARD");}
+    }
+  }
+  function resetJoystick(){joystickHandle.style.transform="translate(0px, 0px)";joystickStateText.textContent="IDLE";sendCmd("STOP");isDragging=false;}
+  joystickHandle.addEventListener('mousedown',function(){isDragging=true;initJoystick();});
+  window.addEventListener('mousemove',function(e){if(isDragging)handleJoystickMove(e.clientX,e.clientY);});
+  window.addEventListener('mouseup',function(){if(isDragging)resetJoystick();});
+  joystickHandle.addEventListener('touchstart',function(e){isDragging=true;initJoystick();e.preventDefault();});
+  window.addEventListener('touchmove',function(e){if(isDragging&&e.touches.length>0)handleJoystickMove(e.touches[0].clientX,e.touches[0].clientY);});
+  window.addEventListener('touchend',function(){if(isDragging)resetJoystick();});
+
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(l){ctlInView=l[0].isIntersecting;},{threshold:.25}).observe(document.getElementById('controller'));
+  }else{ctlInView=true;}
+  var driveKeys={w:'FORWARD',arrowup:'FORWARD',s:'BACKWARD',arrowdown:'BACKWARD',a:'LEFT',arrowleft:'LEFT',d:'RIGHT',arrowright:'RIGHT'};
+  window.addEventListener('keydown',function(e){
+    if(e.repeat||!ctlInView)return;
+    if(e.target&&e.target.tagName==='INPUT'&&e.target.type==='text')return;
+    var k=e.key.toLowerCase();
+    if(driveKeys[k]){e.preventDefault();sendCmd(driveKeys[k]);}
+    else if(k===' '){e.preventDefault();toggleHorn();}
+  });
+  window.addEventListener('keyup',function(e){
+    if(driveKeys[e.key.toLowerCase()]&&currentCommand!=='STOP')sendCmd('STOP');
+  });
+
+  function connectBluetoothKeyboard(){
+    if(!navigator.bluetooth){logMessage("Web Bluetooth is not supported by this browser or device.","error");return;}
+    logMessage("Scanning for Bluetooth LE keyboards and controllers...","info");
+    navigator.bluetooth.requestDevice({acceptAllDevices:true,optionalServices:['battery_service','device_information']})
+    .then(function(device){
+      logMessage("Connected to Bluetooth device: "+(device.name||'Unknown device'),"success");
+      var b=document.getElementById('kbStatusBadge');b.textContent="BT connected: "+(device.name||'HID');b.className="c-pill bt";
+    }).catch(function(error){logMessage("Bluetooth pairing cancelled or failed: "+error.message,"error");});
+  }
+</script>
+</body>
+</html>
